@@ -28,7 +28,7 @@
     owner = builtins.elemAt match 0;
     repo = builtins.elemAt match 1;
   };
-  gitGrammars = builtins.filter isGitGrammar (languagesConfig.grammar // extraGrammars);
+  gitGrammars = builtins.filter isGitGrammar (languagesConfig.grammar ++ extraGrammars);
   buildGrammar = grammar: let
     gh = toGitHubFetcher grammar.source.git;
     sourceGit = builtins.fetchTree {
