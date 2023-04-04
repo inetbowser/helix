@@ -5,6 +5,7 @@
   runCommand,
   yj,
   includeGrammarIf ? _: true,
+  extraGrammars ? [],
   ...
 }: let
   # HACK: nix < 2.6 has a bug in the toml parser, so we convert to JSON
@@ -27,7 +28,7 @@
     owner = builtins.elemAt match 0;
     repo = builtins.elemAt match 1;
   };
-  gitGrammars = builtins.filter isGitGrammar languagesConfig.grammar;
+  gitGrammars = builtins.filter isGitGrammar (languagesConfig.grammar // extraGrammars);
   buildGrammar = grammar: let
     gh = toGitHubFetcher grammar.source.git;
     sourceGit = builtins.fetchTree {
